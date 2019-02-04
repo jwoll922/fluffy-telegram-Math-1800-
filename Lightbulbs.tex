@@ -1,0 +1,489 @@
+% small.tex
+\documentclass{beamer}
+%\usetheme{default}
+\usetheme{Warsaw}
+
+\usepackage{tikzsymbols}
+\usepackage{tkz-berge, tkz-graph}
+\usepackage{caption}
+\usepackage{colortbl}
+
+% Define some colors:
+
+%\definecolor{DarkFern}{HTML}{407428}
+%\definecolor{DarkCharcoal}{HTML}{4D4944}
+%\colorlet{Fern}{DarkFern!85!white}
+%\colorlet{Charcoal}{DarkCharcoal!85!white}
+%\colorlet{LightCharcoal}{Charcoal!50!white}
+%\colorlet{AlertColor}{orange!80!black}
+%\colorlet{DarkRed}{red!70!black}
+%\colorlet{DarkBlue}{blue!70!black}
+%\colorlet{DarkGreen}{green!70!black}
+
+
+% Use the colors:
+
+%\setbeamercolor{title}{fg=Fern}
+%\setbeamercolor{frametitle}{fg=Fern}
+%\setbeamercolor{normal text}{fg=Charcoal}
+%\setbeamercolor{block title}{fg=black,bg=Fern!25!white}
+%\setbeamercolor{block body}{fg=black,bg=Fern!25!white}
+%\setbeamercolor{alerted text}{fg=AlertColor}
+%\setbeamercolor{itemize item}{fg=Charcoal}
+
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\newcommand{\F}{\mathbb{F}}
+
+\newcommand{\bd}{\textbf}
+\newcommand{\on}{yellow}
+\newcommand{\off}{white}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+\begin{document}
+
+
+\title[The Cyclic Lightbulb Game] % (optional, only for long titles)
+{The Cyclic Lightbulb Game}
+%\subtitle{Subtitle}
+\author[Last Names] % (optional, for multiple authors)
+{Names}
+\institute[University of Pittsburgh] % (optional)
+{
+  \inst{}%
+  University of Pittsburgh
+}
+\date[January 31, 2019] % (optional)
+{Math 1800,
+
+January 31, 2019}
+\subject{Lightbulb Game}
+
+\frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{The Lightbulb Game}
+
+Suppose we have the lightbulbs\ldots
+
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        %\GraphInit[vstyle=Classic]
+        \SetVertexMath
+        %\tikzset{VertexStyle/.style = {shape = circle,fill = black, minimum size = 5pt,inner sep=0pt}}
+        %\SetVertexNoLabel
+        \SetVertexLabelOut
+        \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+        \Vertex[Lpos=-90]{A}
+        \SetVertexNormal[Shape=circle, FillColor=\on, LineWidth=1pt]
+        \EA[Lpos=-90](A) {B}
+        \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+        \EA[Lpos=-90](B) {C}
+        \Edges(A,B,C)
+    \end{tikzpicture}
+    %\captionsetup{labelformat=empty}
+\end{figure}
+
+Or more generally,
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        %\GraphInit[vstyle=Classic]
+        \SetVertexMath
+        %\tikzset{VertexStyle/.style = {shape = circle,fill = black, minimum size = 5pt,inner sep=0pt}}
+        %\SetVertexNoLabel
+        \SetVertexLabelOut
+        \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+        \Vertex[Lpos=-90]{1}
+        \SetVertexNormal[Shape=circle, FillColor=\on, LineWidth=1pt]
+        \EA[Lpos=-90](1) {2}
+        \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+        \EA[Lpos=-90](2) {3}
+        \SetGraphUnit{2}
+        \EA[Lpos=-90](3) {n}
+        \Edges(A,B,C)
+        \Edge[label={...}](3)(n)
+    \end{tikzpicture}
+    %\captionsetup{labelformat=empty}
+\end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+We will show the adjacency matrix $A_n$ of the cyclic graph $C_n$, has its determinant
+given by
+\[
+    \abs{A_n} = \abs{T_{n-1}} - 2\abs{T_{n-2}} + 2(-1)^{n+1}
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    $A_n$ has the form:
+    \[
+        A_n=
+        \begin{pmatrix}
+            1 & 1 & 0 & 0 & \dots & 0 & 1\\
+            1 & 1 & 1 & 0 & \dots & \dots & 0\\
+            0 & 1 & \ddots & \ddots & \ddots & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots & \ddots & \vdots & \vdots\\
+            \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & 0\\
+            0 & \vdots & \dots & \ddots & \ddots & \ddots & 1\\
+            1 & 0 & \dots & \dots & 0 & 1 & 1
+        \end{pmatrix}
+    \]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    We preform cofactor expansion along the first row of $A_n$. This will yield 3 terms.
+    \[
+        A_n=
+        \left(\begin{array}{ccccccc}
+            \rowcolor{red!20}
+            1 & 1 & 0 & 0 & \dots & 0 & 1\\
+            1 & 1 & 1 & 0 & \dots & \dots & 0\\
+            0 & 1 & \ddots & \ddots & \ddots & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots & \ddots & \vdots & \vdots\\
+            \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & 0\\
+            0 & \vdots & \dots & \ddots & \ddots & \ddots & 1\\
+            1 & 0 & \dots & \dots & 0 & 1 & 1
+        \end{array}\right)
+    \]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+    \bigskip
+
+    \textbf{The first term}
+    \small
+    \[
+        A_n=
+        \left(\begin{array}{>{\columncolor{red!20}}ccccccc}
+            \rowcolor{red!20}
+            1 & 1 & 0 & 0 & \dots & 0 & 1\\
+            1 & 1 & 1 & 0 & \dots & \dots & 0\\
+            0 & 1 & \ddots & \ddots & \ddots & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots & \ddots & \vdots & \vdots\\
+            \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & 0\\
+            0 & \vdots & \dots & \ddots & \ddots & \ddots & 1\\
+            1 & 0 & \dots & \dots & 0 & 1 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{1+1}
+        \begin{vmatrix}
+            1 & 1 & 0 & \dots & 0\\
+            1 & 1 & 1 & \ddots & \vdots\\
+            0 & 1 & \ddots & \ddots  & 0\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            0 & \dots & 0 & 1 & 1
+        \end{vmatrix}
+    \]
+    \normalsize
+    This is a tridiagonal matrix with ones on each diagonal. So this term is just
+    $\abs{T_{n-1}}$.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    \textbf{The second term}
+    \small
+    \[
+        A_n=
+        \left(\begin{array}{c>{\columncolor{red!20}}cccccc}
+            \rowcolor{red!20}
+            1 & 1 & 0 & 0 & \dots & 0 & 1\\
+            1 & 1 & 1 & 0 & \dots & \dots & 0\\
+            0 & 1 & \ddots & \ddots & \ddots & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots & \ddots & \vdots & \vdots\\
+            \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & 0\\
+            0 & \vdots & \dots & \ddots & \ddots & \ddots & 1\\
+            1 & 0 & \dots & \dots & 0 & 1 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{1+2}
+        \underbrace{
+        \begin{vmatrix}
+            1 & 1 & 0 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & 1 & \ddots & \ddots  & 0\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            1 & \dots & 0 & 1 & 1
+        \end{vmatrix}}_{\abs{B_{n-1}}}
+    \]
+    \normalsize
+    We denote this matrix by $B_{n-1}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    \textbf{The third term}
+    \small
+    \[
+        A_n=
+        \left(\begin{array}{cccccc>{\columncolor{red!20}}c}
+            \rowcolor{red!20}
+            1 & 1 & 0 & 0 & \dots & 0 & 1\\
+            1 & 1 & 1 & 0 & \dots & \dots & 0\\
+            0 & 1 & \ddots & \ddots & \ddots & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots & \ddots & \vdots & \vdots\\
+            \vdots & \vdots & \ddots & \ddots & \ddots & \ddots & 0\\
+            0 & \vdots & \dots & \ddots & \ddots & \ddots & 1\\
+            1 & 0 & \dots & \dots & 0 & 1 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{1+n}
+        \underbrace{
+        \begin{vmatrix}
+            1 & 1 & 1 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots  & 1\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            1 & \dots & 0 & 0 & 1
+        \end{vmatrix}}_{\abs{C_{n-1}}}
+    \]
+    \normalsize
+    We denote this matrix by $C_{n-1}$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Recursive Formula}
+    So far we have
+    \[
+        \abs{A_n} = \abs{T_{n-1}} - \abs{B_{n-1}} + (-1)^{n+1} \abs{C_{n-1}}
+    \]
+    We now perform cofactor expansion on $B_{n-1}$ and $C_{n-1}$ as well.
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    We expand on the first column of $B_{n-1}$, giving us two terms.
+    \bigskip
+
+    \textbf{First term}
+    \small
+    \[
+        B_{n-1} = 
+        \left(\begin{array}{>{\columncolor{red!20}}ccccccc}
+            \rowcolor{red!20}
+            1 & 1 & 0 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & 1 & \ddots & \ddots  & 0\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            1 & \dots & 0 & 1 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{1+1}
+        \begin{vmatrix}
+            1 & 1 & 0 & \dots & 0\\
+            1 & 1 & 1 & \ddots & \vdots\\
+            0 & 1 & \ddots & \ddots & 0\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            0 & \dots & 0 & 1 & 1
+        \end{vmatrix}
+    \]
+    This is the tridiagonal matrix $T_{n-2}$.
+    \normalsize
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    We expand on the first column of $B_{n-1}$, giving us two terms.
+    \bigskip
+
+    \textbf{Second term}
+    \small
+    \[
+        B_{n-1} = 
+        \left(\begin{array}{>{\columncolor{red!20}}ccccccc}
+            1 & 1 & 0 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & 1 & \ddots & \ddots  & 0\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            \rowcolor{red!20}
+            1 & \dots & 0 & 1 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{n-1+1}
+        \begin{vmatrix}
+            1 & 0 & 0 & \dots & 0\\
+            1 & 1 & 0 & \ddots & \vdots\\
+            1 & \ddots & \ddots & \ddots & 0\\
+            \vdots & \ddots & \ddots & \ddots & 0\\
+            0 & \dots & 1 & 1 & 1
+        \end{vmatrix}
+    \]
+    This is a lower triangular matrix with $1$s along the diagonal. So its determinant
+    is $1$.
+    \normalsize
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+We have obtained the following formula for $\abs{B_{n-1}}$:
+\[
+    \abs{B_{n-1}} = \abs{T_{n-2}} + (-1)^n
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    We expand on the first column of $C_{n-1}$, giving us two terms.
+    \bigskip
+
+    \textbf{First term}
+    \small
+    \[
+        C_{n-1} = 
+        \left(\begin{array}{>{\columncolor{red!20}}ccccccc}
+            \rowcolor{red!20}
+            1 & 1 & 1 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots  & 1\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            1 & \dots & 0 & 0 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{1+1}
+        \begin{vmatrix}
+            1 & 1 & 1 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & \ddots & \ddots & \ddots & 1\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            0 & \dots & \dots & 0 & 1
+        \end{vmatrix}
+    \]
+    This is an upper triangular matrix with $1$s along its diagonal. So its determinant
+    is $1$.
+    \normalsize
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+    We expand on the first column of $C_{n-1}$, giving us two terms.
+    \bigskip
+
+    \textbf{Second term}
+    \small
+    \[
+        C_{n-1} = 
+        \left(\begin{array}{>{\columncolor{red!20}}ccccccc}
+            1 & 1 & 1 & \dots & 0\\
+            0 & 1 & 1 & \ddots & \vdots\\
+            0 & 0 & \ddots & \ddots  & 1\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            \rowcolor{red!20}
+            1 & \dots & 0 & 0 & 1
+        \end{array}\right)
+        \hspace{.1in}
+        (-1)^{n-1+1}
+        \begin{vmatrix}
+            1 & 1 & 0 & \dots & 0\\
+            1 & 1 & 1 & \ddots & \vdots\\
+            0 & 1 & \ddots & \ddots & 0\\
+            \vdots & \ddots & \ddots & \ddots & 1\\
+            0 & \dots & 0 & 1 & 1
+        \end{vmatrix}
+    \]
+    This is the tridiagonal matrix $T_{n-2}$ again.
+    \normalsize
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+For $\abs{C_{n-1}}$ we have:
+\[
+    \abs{C_{n-1}} = 1 + (-1)^n\abs{T_{n-2}}
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+We substitute into the formula for $\abs{A_n}$:
+\pause
+    \begin{align*}
+        \abs{A_n} &= \abs{T_{n-1}} - \abs{B_{n-1}} + (-1)^{n+1}\abs{C_{n-1}} \\
+        &= \abs{T_{n-1}} - \left( \abs{T_{n-2}} + (-1)^n \right) + (-1)^{n+1}\left( 1 +
+            (-1)^n \abs{T_{n-2}} \right)\\
+        &= \abs{T_{n-1}} - \abs{T_{n-2}} + 2(-1)^{n+1} + (-1)^{2n+1}\abs{T_{n-2}}\\
+        &= \abs{T_{n-1}} - 2\abs{T_{n-2}} + 2(-1)^{n+1}
+    \end{align*}
+    \pause
+    But when is $\abs{A_n} = 0$? We claim if and only if $n \equiv 0 \pmod{3}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+Recall that $\abs{T_n}$ is given by 
+\[
+    \abs{T_n} = 
+    \begin{cases}
+        1 & n \equiv 0, 1 \pmod{6},\\
+        0 & n \equiv 2, 5 \pmod{6},\\
+        -1 & n \equiv 3,4 \pmod{6}.
+    \end{cases}
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+$(\Rightarrow):$ If $\abs{A_n}=0$, then
+\[
+    \abs{A_n} = \abs{T_{n-1}} - 2\abs{T_{n-2}} + 2(-1)^{n+1} = 0
+\]
+\pause
+But $\abs{T_{n-1}}$ and $\abs{T_{n-2}}$ only take on the values $0$,$1$, $-1$ so\ldots
+\[
+    \abs{A_n} = \{1,-1,0\} + \{2,-2,0\} + \{2,-2\} = 0
+\]
+\pause
+So we must have that $\abs{T_{n-1}} = 0$. 
+\pause
+
+But then $n\equiv 0,3 \pmod{6}$ i.e. $n\equiv 0 \pmod{3}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{The Recursive Formula}
+
+$(\Leftarrow):$ If $n\equiv 0 \pmod 3$ we have two possibilities for $n$ mod $6$:
+\pause
+\begin{enumerate}
+    \item $n\equiv 0 \pmod{6}$, so $\abs{T_{n-1}} = 0$, $\abs{T_{n-2}}=-1$ and $n$ is
+        even.
+        \[ 
+            \abs{A_n} = \abs{T_{n-1}} - 2\abs{T_{n-2}} + 2(-1)^{n+1} = 0 + 2 -2 = 0.
+        \]
+        \pause
+    \item $n\equiv 3 \pmod{6}$, so $\abs{T_{n-1}} = 0$, $\abs{T_{n-2}}=1$ and $n$ is
+        odd.
+        \[ 
+            \abs{A_n} = \abs{T_{n-1}} - 2\abs{T_{n-2}} + 2(-1)^{n+1} = 0 - 2 +2 = 0.
+        \]
+\end{enumerate}
+\end{frame}
+
+
+\end{document}
+
+

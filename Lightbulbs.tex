@@ -110,12 +110,38 @@ Or more generally,
         \EA[Lpos=-90](2) {3}
         \SetGraphUnit{2}
         \EA[Lpos=-90](3) {n}
-        \Edges(A,B,C)
+        \Edges(1,2,3)
         \Edge[label={...}](3)(n)
     \end{tikzpicture}
     %\captionsetup{labelformat=empty}
 \end{figure}
 
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Cyclic Lightbulb Game}
+    PLACEHOLDER
+    Maybe something about how our data suggested some configs weren't solvable when
+    $n\equiv 0 \pmod{3}$\ldots
+
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        %\GraphInit[vstyle=Classic]
+        \SetVertexMath
+        %\tikzset{VertexStyle/.style = {shape = circle,fill = black, minimum size = 5pt,inner sep=0pt}}
+        %\SetVertexNoLabel
+        \SetVertexLabelOut
+        \SetGraphUnit{2}
+        \begin{scope}[rotate=0]
+            \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+            \Vertices{circle}{1,2,3,4,n}
+            \Edges(1,2,3,4) \Edges(n,1)
+            \Edge[label={...}](4)(n)
+        \end{scope}
+    \end{tikzpicture}
+    %\captionsetup{labelformat=empty}
+\end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -170,7 +196,7 @@ given by
 
     \bigskip
 
-    \textbf{The first term}
+    \textbf{First term}
     \small
     \[
         A_n=
@@ -202,7 +228,7 @@ given by
 
 \begin{frame}
 \frametitle{The Recursive Formula}
-    \textbf{The second term}
+    \textbf{Second term}
     \small
     \[
         A_n=
@@ -233,7 +259,7 @@ given by
 
 \begin{frame}
 \frametitle{The Recursive Formula}
-    \textbf{The third term}
+    \textbf{Third term}
     \small
     \[
         A_n=

@@ -1,0 +1,12 @@
+Intro
+Linear combination
+determinant
+cofactor
+tridiagonal
+
+Clair-proof of solution
+Well known that...(recurrence relation)
+List values of T_n
+
+Intro to modified problem
+slide(s) similar to first intro

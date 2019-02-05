@@ -52,8 +52,8 @@
 \title[The Cyclic Lightbulb Game] % (optional, only for long titles)
 {The Cyclic Lightbulb Game}
 %\subtitle{Subtitle}
-\author[Last Names] % (optional, for multiple authors)
-{Names}
+\author[Hickey, Maier, Wollenweber] % (optional, for multiple authors)
+{Claire Hickey, Justin Maier, Josh Wollenweber}
 \institute[University of Pittsburgh] % (optional)
 {
   \inst{}%
@@ -83,12 +83,12 @@ Suppose we have the lightbulbs\ldots
         %\SetVertexNoLabel
         \SetVertexLabelOut
         \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
-        \Vertex[Lpos=-90]{A}
+        \Vertex[Lpos=-90]{1}
         \SetVertexNormal[Shape=circle, FillColor=\on, LineWidth=1pt]
-        \EA[Lpos=-90](A) {B}
+        \EA[Lpos=-90](1) {2}
         \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
-        \EA[Lpos=-90](B) {C}
-        \Edges(A,B,C)
+        \EA[Lpos=-90](2) {3}
+        \Edges(1,2,3)
     \end{tikzpicture}
     %\captionsetup{labelformat=empty}
 \end{figure}
@@ -116,6 +116,90 @@ Or more generally,
     %\captionsetup{labelformat=empty}
 \end{figure}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{When is the Linear Lightbulb Game Solvable?}
+The matrix for the linear game on $4$ lightbulbs looks like
+\[
+    \begin{pmatrix}
+        1 & 1 & 0 & 0\\
+        1 & 1 & 1 & 0\\
+        0 & 1 & 1 & 1\\
+        0 & 0 & 1 & 1
+    \end{pmatrix}
+\]
+
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        %\GraphInit[vstyle=Classic]
+        \SetVertexMath
+        %\tikzset{VertexStyle/.style = {shape = circle,fill = black, minimum size = 5pt,inner sep=0pt}}
+        %\SetVertexNoLabel
+        \SetVertexLabelOut
+        \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+        \Vertex[Lpos=-90]{1}
+        \EA[Lpos=-90](1) {2}
+        \EA[Lpos=-90](2) {3}
+        \EA[Lpos=-90](3) {4}
+        \Edges(1,2,3,4)
+    \end{tikzpicture}
+    %\captionsetup{labelformat=empty}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{When is the Linear Lightbulb Game Solvable?}
+On $n$ lightbulbs, that is
+\[
+    \begin{pmatrix}
+        1 & 1 & 0 & \dots & 0\\
+        1 & 1 & 1 & \ddots & \vdots\\
+        0 & 1 & \ddots & \ddots  & 0\\
+        \vdots & \ddots & \ddots & \ddots & 1\\
+        0 & \dots & 0 & 1 & 1
+    \end{pmatrix}
+\]
+
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        %\GraphInit[vstyle=Classic]
+        \SetVertexMath
+        %\tikzset{VertexStyle/.style = {shape = circle,fill = black, minimum size = 5pt,inner sep=0pt}}
+        %\SetVertexNoLabel
+        \SetVertexLabelOut
+        \SetVertexNormal[Shape=circle, FillColor=\off, LineWidth=1pt]
+        \Vertex[Lpos=-90]{1}
+        \EA[Lpos=-90](1) {2}
+        \EA[Lpos=-90](2) {3}
+        \SetGraphUnit{2}
+        \EA[Lpos=-90](3) {n}
+        \Edges(1,2,3)
+        \Edge[label={\ldots}](3)(n)
+    \end{tikzpicture}
+    %\captionsetup{labelformat=empty}
+\end{figure}
+This is a tridiagonal matrix with $1$s on the diagonal, which we denote by $T_n$.
+\end{frame}
+
+\begin{frame}
+\frametitle{When is the Linear Lightbulb Game Solvable?}
+The determinant of $T_n$ is given by the recursive formula:
+\[
+    \abs{T_n} = \abs{T_{n-1}} - \abs{T_{n-2}}
+\]
+\pause
+Seeing that $\abs{T_1} = 1$ and $\abs{T_2} = 0$, we get
+\[
+    \abs{T_n} = 
+    \begin{cases}
+        1 & n \equiv 0, 1 \pmod{6},\\
+        0 & n \equiv 2, 5 \pmod{6},\\
+        -1 & n \equiv 3,4 \pmod{6}.
+    \end{cases}
+\]
 \end{frame}
 
 \begin{frame}
